@@ -43,7 +43,7 @@ namespace Test
 
             var userRegisterRequest = new UserRegisterRequest()
             {
-                Name = "Ahmet Mehmet",
+                FullName = "Ahmet Mehmet",
                 Email = "ahmet@hotmail.com",
                 Role = (UserRoleEnum)3,
                 UserPermissions = (PermissionEnum[])Enum.GetValues(typeof(PermissionEnum))

@@ -12,7 +12,6 @@ namespace Models.Entities
         public string Color { get; set; }
         public string Plate { get; set; }
         public int OwnerId { get; set; }
-        [ForeignKey("OwnerId")]
-        public Resident Owner { get; set; }   
+        public User Owner { get; set; }   
     }
 }

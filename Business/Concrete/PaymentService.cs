@@ -1,41 +1,47 @@
 ﻿using AutoMapper;
 using Business.Abstract;
-using Business.Configuration.Helper;
+using Business.Configuration.Extensions;
 using Business.Configuration.Response;
+using Business.Configuration.Validator.FluentValidation.PaymentValidation;
 using DAL.Abstract;
 using DTO.Payment;
-using DTO.Property;
 
 namespace Business.Concrete
 {
     public class PaymentService : IPaymentService
     {
-        private readonly IMapper _mapper;
         private readonly IPropertyService _propertyService;
-        private readonly ICreditCardService _creditCardService;
         private readonly IBillRepository _billRepository;
         private readonly IRevenueRepository _revenueRepository;
-        public PaymentService(IMapper mapper, IPropertyService propertyService, IRevenueRepository revenueRepository, IBillRepository billRepository)
+        public PaymentService(IPropertyService propertyService, IRevenueRepository revenueRepository, IBillRepository billRepository)
         {
-            _mapper = mapper;
             _propertyService = propertyService;
             _revenueRepository = revenueRepository;
             _billRepository = billRepository;
         }
 
-        public CommandResponse PayBill(PaymentPostRequest request)
+        public CommandResponse PayBill(PayBillRequest request)
         {
-            //var validator = new PropertyInsertRequestValidator();
-            //validator.Validate(request).ThrowIfException();
-
+            //Validation
+            var validator = new PayBillRequestValidator();
+            validator.Validate(request).ThrowIfException();
+            
             var bill = _billRepository.Get(x=>x.Id == request.BillId);
+            
+            if (bill.IsPaid)
+            {
+                return new CommandResponse
+                {
+                    Success = false,
+                    Message = $"Revenue already paid."
+                };
+            }
 
-            //var creditCard = _repository.Get(request.Id);
-            bill.Paid = true;
+            bill.IsPaid = true;
             _billRepository.Update(bill);
             
             //Calculate Debt and Update to Database
-            _propertyService.DebtUpdate(request.PropertyId, bill.Price, bill.Paid);
+            _propertyService.DebtUpdate(request.PropertyId, bill.Price, bill.IsPaid);
 
             return new CommandResponse
             {
@@ -44,24 +50,34 @@ namespace Business.Concrete
             };
         }
 
-        public CommandResponse PayRevenue(PaymentPostRequest request)
+        public CommandResponse PayRevenue(PayRevenueRequest request)
         {
-            //var validator = new PropertyInsertRequestValidator();
-            //validator.Validate(request).ThrowIfException();
+            //Validation
+            var validator = new PayRevenueRequestValidator();
+            validator.Validate(request).ThrowIfException();
 
-            var revenue = _revenueRepository.Get(x => x.Id == request.RevenuesId);
+            var revenue = _revenueRepository.Get(x => x.Id == request.RevenueId);
+
+            if (revenue.IsPaid)
+            {
+                return new CommandResponse
+                {
+                    Success = false,
+                    Message = $"Revenue already paid."
+                };
+            }
 
             //var creditCard = _repository.Get(request.Id);
-            revenue.Paid = true;
+            revenue.IsPaid = true;
             _revenueRepository.Update(revenue);
 
             //Calculate Debt and Update to Database
-            _propertyService.DebtUpdate(request.PropertyId, revenue.Price, revenue.Paid);
+            _propertyService.DebtUpdate(request.PropertyId, revenue.Price, revenue.IsPaid);
 
             return new CommandResponse
             {
                 Success = true,
-                Message = $"Bill paid successfully."
+                Message = $"Revenue paid successfully."
             };
         }
     }

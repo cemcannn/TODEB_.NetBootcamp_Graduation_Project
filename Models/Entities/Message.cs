@@ -11,6 +11,6 @@ namespace Models.Entities
         public string Sender { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }
-        public bool Read { get; set; }
+        public bool IsRead { get; set; }
     }
 }

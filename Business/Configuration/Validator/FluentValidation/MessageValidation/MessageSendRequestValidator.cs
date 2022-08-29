@@ -8,7 +8,7 @@ namespace Business.Configuration.Validator.FluentValidation.MessageValidation
         public MessageSendRequestValidator()
         {
             RuleFor(x => x.Title).NotEmpty().WithMessage("Title is required");
-            RuleFor(x => x.Description).NotEmpty().Length(5, 250).WithMessage("Description is required and must be between 10-250 characters.");
+            RuleFor(x => x.Description).NotEmpty().WithMessage("Description is required.");
         }
     }
 }

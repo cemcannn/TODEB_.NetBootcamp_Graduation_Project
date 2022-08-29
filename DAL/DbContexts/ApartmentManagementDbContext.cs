@@ -12,7 +12,6 @@ namespace DAL.DbContexts
             _configuration = configuration;
         }
         public DbSet<Property> Properties { get; set; }
-        public DbSet<Resident> Residents { get; set; }
         public DbSet<Bill> Bills { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Revenue> Revenues { get; set; }

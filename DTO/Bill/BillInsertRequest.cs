@@ -1,5 +1,4 @@
 ﻿using Models.Common;
-using System;
 
 namespace DTO.Bill
 {
@@ -10,6 +9,6 @@ namespace DTO.Bill
         public int Month { get; set; }
         public int PropertyId { get; set; }
         public string Description { get; set; }
-        public bool Paid { get; set; }
+        public bool IsPaid { get; set; }
     }
 }

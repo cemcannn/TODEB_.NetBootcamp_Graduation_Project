@@ -81,7 +81,7 @@ namespace Business.Concrete
             }
 
             //Update request
-            var mapped = _mapper.Map<Property>(request);
+            var mapped = _mapper.Map(request, entity);
             _repository.Update(mapped);
             _repository.SaveChanges();
 
@@ -98,6 +98,14 @@ namespace Business.Concrete
             var totalDebt = CalculatorHelper.CalculateDebt(data.Debt, price, paid);
             data.Debt = totalDebt;
             _repository.Update(data);
+            _repository.SaveChanges();
+        }
+        
+        public PropertyGetResponse GetProperty(int id)
+        {
+            var data = _repository.GetProperty(id);
+            var mappedData = _mapper.Map<PropertyGetResponse>(data);
+            return mappedData;
         }
     }
 }

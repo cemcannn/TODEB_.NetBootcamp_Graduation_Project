@@ -4,7 +4,6 @@ using DTO.CreditCard;
 using DTO.Message;
 using DTO.Payment;
 using DTO.Property;
-using DTO.Resident;
 using DTO.Revenue;
 using DTO.User;
 using DTO.Vehicle;
@@ -21,12 +20,6 @@ namespace Business.Configuration.Mapper
             CreateMap<UserRegisterRequest, User>();
             CreateMap<UserUpdateRequest, User>();
             CreateMap<User, UserGetResponse>();
-
-            //Resident Mapping
-            CreateMap<ResidentInsertRequest, Resident>();
-            CreateMap<ResidentUpdateRequest, Resident>();
-            CreateMap<Resident, ResidentGetResponse>();
-
 
             //Bill Mapping
             CreateMap<BillInsertRequest, Bill>();
@@ -58,7 +51,7 @@ namespace Business.Configuration.Mapper
             CreateMap<CreditCardInsertRequest, CreditCard>();
             CreateMap<CreditCardUpdateRequest, CreditCard>();
             CreateMap<CreditCard, CreditCardGetResponse>();
-            CreateMap<CreditCard, PaymentPostRequest>();
+            CreateMap<CreditCard, PayBillRequest>();
         }
 
     }

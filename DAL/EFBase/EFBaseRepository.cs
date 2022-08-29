@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.EFBase
 {
@@ -46,15 +44,15 @@ namespace DAL.EFBase
             }
         }
 
-        public void SaveChanges()
-        {
-            Context.SaveChanges();
-        }
-
         public T Update(T entity)
         {
             Context.Update(entity);
             return entity;
+        }
+
+        public void SaveChanges()
+        {
+            Context.SaveChanges();
         }
     }
 }

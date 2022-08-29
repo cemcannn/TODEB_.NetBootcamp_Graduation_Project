@@ -5,5 +5,6 @@ namespace DAL.Abstract
 {
     public interface IBillRepository : IEfBaseRepository<Bill>
     {
+        Bill GetBillWithDetails(int id);
     }
 }

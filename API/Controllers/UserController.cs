@@ -1,6 +1,7 @@
 ﻿using API.Configuration.Filters.Auth;
 using Business.Abstract;
 using DTO.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.Common;
 
@@ -22,7 +23,7 @@ namespace API.Controllers
             var response = _service.Register(register);
             return Ok(response);
         }
-
+        [Authorize]
         [HttpGet("GetAll")]
         [Permission(PermissionEnum.Admin)]
         public IActionResult GetAll()
@@ -30,7 +31,7 @@ namespace API.Controllers
             var data = _service.GetAll();
             return Ok(data);
         }
-
+        [Authorize]
         [HttpGet("GetById")]
         public IActionResult GetById(int id)
         {

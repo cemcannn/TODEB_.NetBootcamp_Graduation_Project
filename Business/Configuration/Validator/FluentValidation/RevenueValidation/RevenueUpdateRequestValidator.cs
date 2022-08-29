@@ -10,6 +10,7 @@ namespace Business.Configuration.Validator.FluentValidation.RevenueValidation
             RuleFor(x => x.Id).NotEmpty().WithMessage("Id is required");
             RuleFor(x => x.Price).NotEmpty().WithMessage("Price is required");
             RuleFor(x => x.Month).NotEmpty().WithMessage("Month is required");
+            RuleFor(x => x.PropertyId).NotEmpty().WithMessage("Property Id is required");
         }
     }
 }

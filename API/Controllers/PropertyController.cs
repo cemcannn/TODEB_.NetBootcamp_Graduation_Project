@@ -34,6 +34,13 @@ namespace API.Controllers
             return Ok(data);
         }
 
+        [HttpGet("GetUser")]
+        public IActionResult GetProperty(int id)
+        {
+            var data = _service.GetProperty(id);
+            return Ok(data);
+        }
+
         [HttpPost]
         public IActionResult Insert(PropertyInsertRequest property)
         {

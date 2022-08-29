@@ -13,5 +13,15 @@ namespace DAL.Concrete.EFCore
         public EFPropertyRepository(ApartmentManagementDbContext context) : base(context)
         {
         }
+
+        public Property GetProperty(int id)
+        {
+            return Context.Properties.Include(x => x.Bills).FirstOrDefault();
+        }
+
+        public Property GetUser(int id)
+        {
+            return Context.Properties.Include(x => x.Bills).FirstOrDefault();
+        }
     }
 }

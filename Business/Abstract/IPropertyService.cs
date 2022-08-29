@@ -13,5 +13,6 @@ namespace Business.Abstract
         public CommandResponse Update(PropertyUpdateRequest request);
         public CommandResponse Delete(Property property);
         public void DebtUpdate(int id, int price, bool paid);
+        public PropertyGetResponse GetProperty(int id);
     }
 }

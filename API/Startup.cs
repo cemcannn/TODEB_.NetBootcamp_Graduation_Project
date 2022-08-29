@@ -81,7 +81,6 @@ namespace API
             services.AddScoped<IBillRepository, EFBillRepository>();
             services.AddScoped<IMessageRepository, EFMessageRepository>();
             services.AddScoped<IPropertyRepository, EFPropertyRepository>();
-            services.AddScoped<IResidentRepository, EFResidentRepository>();
             services.AddScoped<IRevenueRepository, EFRevenueRepository>();
             services.AddScoped<IVehicleRepository, EFVehicleRepository>();
             services.AddScoped<IUserRepository, EFUserRepository>();
@@ -90,7 +89,6 @@ namespace API
             services.AddScoped<IBillService, BillService>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IPropertyService, PropertyService>();
-            services.AddScoped<IResidentService, ResidentService>();
             services.AddScoped<IRevenueService, RevenueService>();
             services.AddScoped<IVehicleService, VehicleService>();
             services.AddScoped<IAuthService, AuthService>();
@@ -141,6 +139,8 @@ namespace API
             services.AddScoped<IMailService, MailService>();
 
             services.AddControllers();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             //Swagger
             services.AddSwaggerGen(c =>

@@ -54,7 +54,7 @@ namespace Business.Concrete
             validator.Validate(request).ThrowIfException();
 
             //Calculate Debt and Update to Database
-            _propertyService.DebtUpdate(request.PropertyId, request.Price, request.Paid);
+            _propertyService.DebtUpdate(request.PropertyId, request.Price, request.IsPaid);
 
             //Add request to database
             var entity = _mapper.Map<Revenue>(request);
@@ -85,10 +85,10 @@ namespace Business.Concrete
             }
 
             //Calculate Debt and Update to Database
-            _propertyService.DebtUpdate(request.PropertyId, request.Price, request.Paid);
+            _propertyService.DebtUpdate(request.PropertyId, request.Price, request.IsPaid);
 
             //Update request
-            var mapped = _mapper.Map<Revenue>(request);
+            var mapped = _mapper.Map(request, entity);
             _repository.Update(mapped);
             _repository.SaveChanges();
 

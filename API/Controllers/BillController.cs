@@ -33,6 +33,13 @@ namespace API.Controllers
             var data = _service.GetById(id);
             return Ok(data);
         }
+        
+        [HttpGet("GetBillWithProperty")]
+        public IActionResult GetBillWithProperty(int id)
+        {
+            var data = _service.GetBillWithProperty(id);
+            return Ok(data);
+        }
 
         [HttpPost]
         public IActionResult Insert(BillInsertRequest bill)

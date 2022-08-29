@@ -80,7 +80,7 @@ namespace Business.Concrete
             }
 
             //Update request
-            var mapped = _mapper.Map<Vehicle>(request);
+            var mapped = _mapper.Map(request, entity);
             _repository.Update(mapped);
             _repository.SaveChanges();
 

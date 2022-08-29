@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApartmentManagementDbContext))]
-    [Migration("20220815062550_firstMigration")]
+    [Migration("20220818170759_firstMigration")]
     partial class firstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,17 +28,14 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BillId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Month")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Paid")
-                        .HasColumnType("bit");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
@@ -50,8 +47,6 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BillId");
 
                     b.HasIndex("PropertyId");
 
@@ -71,7 +66,7 @@ namespace DAL.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Read")
+                    b.Property<bool>("IsRead")
                         .HasColumnType("bit");
 
                     b.Property<string>("Sender")
@@ -92,26 +87,17 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BillId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Debt")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Empty")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Floor")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsEmpty")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Number")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ResidentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RevenueId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Section")
                         .HasColumnType("nvarchar(max)");
@@ -119,53 +105,15 @@ namespace DAL.Migrations
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VehicleId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Properties");
-                });
-
-            modelBuilder.Entity("Models.Entities.Resident", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ResidentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Surname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TRIdNumber")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Tenant")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResidentId");
-
-                    b.ToTable("Residents");
                 });
 
             modelBuilder.Entity("Models.Entities.Revenue", b =>
@@ -178,11 +126,11 @@ namespace DAL.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Month")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Paid")
-                        .HasColumnType("bit");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
@@ -190,14 +138,9 @@ namespace DAL.Migrations
                     b.Property<int>("PropertyId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RevenueId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PropertyId");
-
-                    b.HasIndex("RevenueId");
 
                     b.ToTable("Revenues");
                 });
@@ -212,8 +155,11 @@ namespace DAL.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsTenant")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Phone1")
                         .HasColumnType("nvarchar(max)");
@@ -224,10 +170,7 @@ namespace DAL.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Surname")
+                    b.Property<string>("TRIdNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -301,26 +244,17 @@ namespace DAL.Migrations
                     b.Property<string>("Plate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("VehicleId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
-
-                    b.HasIndex("VehicleId");
 
                     b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("Models.Entities.Bill", b =>
                 {
-                    b.HasOne("Models.Entities.Property", null)
-                        .WithMany("Bills")
-                        .HasForeignKey("BillId");
-
                     b.HasOne("Models.Entities.Property", "Property")
-                        .WithMany()
+                        .WithMany("Bills")
                         .HasForeignKey("PropertyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -328,24 +262,24 @@ namespace DAL.Migrations
                     b.Navigation("Property");
                 });
 
-            modelBuilder.Entity("Models.Entities.Resident", b =>
+            modelBuilder.Entity("Models.Entities.Property", b =>
                 {
-                    b.HasOne("Models.Entities.Property", null)
-                        .WithMany("Residents")
-                        .HasForeignKey("ResidentId");
+                    b.HasOne("Models.Entities.User", "User")
+                        .WithOne("Property")
+                        .HasForeignKey("Models.Entities.Property", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Models.Entities.Revenue", b =>
                 {
                     b.HasOne("Models.Entities.Property", "Property")
-                        .WithMany()
+                        .WithMany("Revenues")
                         .HasForeignKey("PropertyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Models.Entities.Property", null)
-                        .WithMany("Revenues")
-                        .HasForeignKey("RevenueId");
 
                     b.Navigation("Property");
                 });
@@ -374,19 +308,11 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Models.Entities.Vehicle", b =>
                 {
-                    b.HasOne("Models.Entities.Resident", "Owner")
-                        .WithMany()
+                    b.HasOne("Models.Entities.User", "Owner")
+                        .WithMany("Vehicles")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Models.Entities.Property", null)
-                        .WithMany("Vehicles")
-                        .HasForeignKey("VehicleId");
-
-                    b.HasOne("Models.Entities.Resident", null)
-                        .WithMany("Vehicles")
-                        .HasForeignKey("VehicleId");
 
                     b.Navigation("Owner");
                 });
@@ -395,16 +321,7 @@ namespace DAL.Migrations
                 {
                     b.Navigation("Bills");
 
-                    b.Navigation("Residents");
-
                     b.Navigation("Revenues");
-
-                    b.Navigation("Vehicles");
-                });
-
-            modelBuilder.Entity("Models.Entities.Resident", b =>
-                {
-                    b.Navigation("Vehicles");
                 });
 
             modelBuilder.Entity("Models.Entities.User", b =>
@@ -412,6 +329,10 @@ namespace DAL.Migrations
                     b.Navigation("Password");
 
                     b.Navigation("Permissions");
+
+                    b.Navigation("Property");
+
+                    b.Navigation("Vehicles");
                 });
 #pragma warning restore 612, 618
         }

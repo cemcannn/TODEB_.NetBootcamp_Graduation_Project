@@ -9,7 +9,7 @@ using MongoDB.Bson;
 namespace API.Controllers
 {
     [Authorize]
-    [Permission(PermissionEnum.Admin|PermissionEnum.User)]
+    [Permission(PermissionEnum.Admin | PermissionEnum.User)]
     [Route("api/[controller]")]
     [ApiController]
     public class CreditCardController : ControllerBase

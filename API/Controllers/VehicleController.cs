@@ -8,8 +8,8 @@ using Models.Entities;
 
 namespace API.Controllers
 {
-    [Authorize]
-    [Permission(PermissionEnum.Admin)]
+    //[Authorize]
+    //[Permission(PermissionEnum.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class VehicleController : ControllerBase

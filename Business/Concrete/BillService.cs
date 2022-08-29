@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using Business.Abstract;
 using Business.Configuration.Extensions;
-using Business.Configuration.Helper;
 using Business.Configuration.Response;
 using Business.Configuration.Validator.FluentValidation.BillValidation;
 using DAL.Abstract;
 using DTO.Bill;
-using DTO.Property;
 using Models.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,9 +43,12 @@ namespace Business.Concrete
             return mappedData;
         }
 
-        public IEnumerable<BillGetResponse> GetAllWithProperty()
+
+        public BillGetResponse GetBillWithProperty(int id)
         {
-            throw new System.NotImplementedException();
+            var data = _repository.GetBillWithDetails(id);
+            var mappedData = _mapper.Map<BillGetResponse>(data);
+            return mappedData;
         }
 
         public BillGetResponse GetById(int id)
@@ -64,7 +65,7 @@ namespace Business.Concrete
             validator.Validate(request).ThrowIfException();
 
             //Calculate Debt and Update to Database
-            _propertyService.DebtUpdate(request.PropertyId, request.Price, request.Paid);
+            _propertyService.DebtUpdate(request.PropertyId, request.Price, request.IsPaid);
 
             //Add Request to Database  
             var entity = _mapper.Map<Bill>(request);
@@ -96,10 +97,10 @@ namespace Business.Concrete
 
 
             //Calculate Debt and Update to Database
-            _propertyService.DebtUpdate(request.PropertyId, request.Price, request.Paid);
+            _propertyService.DebtUpdate(request.PropertyId, request.Price, request.IsPaid);
 
             //Update request
-            var mapped = _mapper.Map<Bill>(request);
+            var mapped = _mapper.Map(request, entity);
             _repository.Update(mapped);
             _repository.SaveChanges();
 

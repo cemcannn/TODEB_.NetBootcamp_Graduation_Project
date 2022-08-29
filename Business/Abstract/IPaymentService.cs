@@ -5,6 +5,6 @@ namespace Business.Abstract
 {
     public interface IPaymentService
     {
-        public CommandResponse PayBill(PaymentPostRequest request);
+        public CommandResponse PayBill(PayBillRequest request);
     }
 }

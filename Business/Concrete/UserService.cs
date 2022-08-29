@@ -69,7 +69,7 @@ namespace Business.Concrete
             _repository.SaveChanges();
 
             //Cache permission
-            var key = StringHelper.CreateCacheKey(user.Name, user.Id);
+            var key = StringHelper.CreateCacheKey(user.FullName, user.Id);
             var cachePermission = System.Text.Json.JsonSerializer.Serialize(register.UserPermissions);
 
             _distributedCache.SetString(key, cachePermission);

@@ -12,6 +12,6 @@ namespace Business.Abstract
         public CommandResponse Insert(BillInsertRequest request);
         public CommandResponse Update(BillUpdateRequest request);
         public CommandResponse Delete(Bill bill);
-        public IEnumerable<BillGetResponse> GetAllWithProperty();
+        public BillGetResponse GetBillWithProperty(int id);
     }
 }

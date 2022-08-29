@@ -61,9 +61,9 @@ namespace Business.Concrete
                 var claims = new Claim[]
                 {
                     new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.GivenName, user.Name),
+                    new Claim(ClaimTypes.GivenName, user.FullName),
                     new Claim(ClaimTypes.Role,user.Role.ToString()),
-                    new Claim("PermissionCache",StringHelper.CreateCacheKey(user.Name,user.Id))
+                    new Claim("PermissionCache",StringHelper.CreateCacheKey(user.FullName,user.Id))
                 };
 
                 SecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecurityKey));
